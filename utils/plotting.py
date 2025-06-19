@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def plot_2x2(data, ax, box_colors, significant_combinations, significance_lines_position=None, half_line=True):
+def plot_2x2(data, ax, box_colors, significant_combinations, significance_lines_position=None, half_line=True, show_points=False):
 
     plt.sca(ax)
 
@@ -10,7 +10,7 @@ def plot_2x2(data, ax, box_colors, significant_combinations, significance_lines_
         significance_lines_position = {(0, 1): 'up', (2, 3): 'up', (0, 2): 'down', (1, 3): 'down'}
 
     boxplot(data, box_colors=box_colors, significance_lines_position=significance_lines_position,
-            significant_combinations=significant_combinations)
+            significant_combinations=significant_combinations, show_points=show_points)
 
     plt.xticks([1.5, 3.5], ['Structured', 'Unstructured'])
     if half_line:
@@ -33,7 +33,7 @@ def plot_2x3(data, ax, box_colors, significant_combinations, significance_lines_
         plt.axvline(3.5, -10, 10, linestyle='--', color=(0.5, 0.5, 0.5))
 
 
-def boxplot(data, significant_combinations=[],
+def boxplot(data, significant_combinations=[], show_points=False,
             sep_multiplier=1, box_colors='w', median_colors='k', boxes_alpha=1,
             linewdith=1, median_linewidth=1, significance_lines_position='up'):
 
@@ -68,6 +68,25 @@ def boxplot(data, significant_combinations=[],
         patch.set_alpha(boxes_alpha)
         patch.set_linewidth(linewdith)
         median.set_linewidth(median_linewidth)
+
+    if show_points:
+
+        for i in range(len(data)-1):
+
+            x_values_1 = np.ones(len(data[i])) * i + 1
+            x_values_2 = np.ones(len(data[i+1])) * i + 2
+            y_values_1 = data[i]
+            y_values_2 = data[i+1]
+
+            # Il colore dei punti o è dato da un gradiente (dall'alto in basso)
+            # Oppure è dato dall'utente (per ogni box) oppure da un gradiente
+            col_1 = 'w'
+            col_2 = 'w'
+
+            # Punti
+            plt.scatter(x_values_1, y_values_1, 9, color=col_1, zorder=10, edgecolors='k')
+            plt.scatter(x_values_2, y_values_2, 9, color=col_2, zorder=10, edgecolors='k')
+            
 
     # Plotto le differenze significative
     if len(significant_combinations) > 0:
