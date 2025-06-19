@@ -201,3 +201,7 @@ marimo/_lsp/
 __marimo__/
 
 *.pdf
+/data
+main_old.ipynb
+utils_old.py
+Analisi_HierarchicalPlanning_*
