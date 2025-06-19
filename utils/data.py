@@ -2,10 +2,9 @@ import pandas as pd
 import numpy as np
 
 
-
 def standardize_df_data(df_original, norm_conditions, norm_vars):
 
-    if type(norm_vars) is not list: 
+    if type(norm_vars) is not list:
         norm_vars = [norm_vars]
 
     df = df_original.copy()
@@ -20,12 +19,12 @@ def standardize_df_data(df_original, norm_conditions, norm_vars):
 def extract_2x2_data(df, choices, var='count'):
 
     subjects = df['subject'].unique()
-    condition_data = np.zeros((len(subjects), 4)) 
+    condition_data = np.zeros((len(subjects), 4))
 
     for i, subject in enumerate(subjects):
         for j, structured in enumerate([True, False]):
             for k, first_choice in enumerate(choices):
-                
+
                 data_subject = df[(df['subject'] == subject) & (df['structured'] == structured) & (df['first_choice'] == first_choice)][var]
                 if len(data_subject) == 0:
                     value_subject = 0
@@ -41,12 +40,12 @@ def extract_2x2_data(df, choices, var='count'):
 def extract_2x3_data(df, var='count'):
 
     subjects = df['subject'].unique()
-    condition_data = np.zeros((len(subjects), 6)) 
+    condition_data = np.zeros((len(subjects), 6))
 
     for i, subject in enumerate(subjects):
         for j, structured in enumerate([True, False]):
             for k, first_choice in enumerate(['H', 'S', 'C']):
-                
+
                 data_subject = df[(df['subject'] == subject) & (df['structured'] == structured) & (df['first_choice'] == first_choice)][var]
                 if len(data_subject) == 0:
                     value_subject = 0
@@ -57,8 +56,6 @@ def extract_2x3_data(df, var='count'):
 
                 condition_data[i, j*3 + k] = value_subject
     return condition_data
-
-
 
 
 def fix_count_df(df_counts):

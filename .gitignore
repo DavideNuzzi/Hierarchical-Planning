@@ -206,5 +206,5 @@ main_old.ipynb
 utils_old.py
 Analisi_HierarchicalPlanning_*
 SCRIPT
-hp.py
 data/
+data_formatting/
